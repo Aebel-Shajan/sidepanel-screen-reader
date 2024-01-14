@@ -1,0 +1,20 @@
+{
+	"name": "Sidepanel Screen Reader",
+  "version": "0.0.1",
+  "manifest_version": 3,
+	"description": "AI Screen Reader but in the side panel.",
+	"icons": {
+		"128": "images/sidepanel-screen-reader.png"
+	},
+	"permissions": ["sidePanel", "tts", "scripting", "contextMenus", "activeTab"],
+	"action": {
+		"default_title": "Click to open panel"
+	},
+	"side_panel": {
+		"default_path": "sidePanel.html"
+	},
+	"background": {
+		"service_worker": "scripts/service-worker.js",
+		"type": "module"
+	}
+}

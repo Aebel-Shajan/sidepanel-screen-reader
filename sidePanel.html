@@ -1,0 +1,55 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Gen Z screen reader</title>
+	<link rel="stylesheet" href="sidePanel.css">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+	<header>
+		<image class="logo-image" src="images/sidepanel-screen-reader.png"></image>
+		Sidepanel Screen Reader
+	</header>
+	<main>
+		<div id="preview-text-container">
+			<textarea id="preview-text" placeholder="Instructions:
+1. right click > click 'Read website'
+or
+1. select text > right click > click 'Read selection'
+or 
+1. copy and past content here
+then
+2. press play to start tts (disables text area)
+3. press stop to stop tts (enables text area)
+
+
+
+
+
+
+Limitations:
+1. im using mozilla's readability.js library, it has trouble with reddit 😢
+2. chrome tts voice kinda clunky
+3. character limit of 30000
+4. brain rot is likely to occur
+"></textarea>
+		</div>
+		<div id="options-container" class="panel">
+
+			<button id="clear-contents">🗑️</button>
+			<button id="play-pause-toggle" class="play">▶️</button>
+			<button id="stop">⏹️</button>
+			<select></select>
+
+
+		</div>
+		</div>
+		<div id="loading"></div>
+	</main>
+	<script src="scripts/sidePanel.js" type="module"></script>
+</body>
+
+</html>
