@@ -49,3 +49,38 @@ export function cleanUpText(text) {
 		// add space to end of sentences
 		.replace(/(?<=[A-Za-z0-9])\.(?=[A-Z])/g, '. ');
 }
+
+export function splitTextIntoSentences(text, maxWords = 20) {
+	// Split the text into sentences, considering punctuation and new lines
+	let sentences = text.match(/([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g)
+
+
+	// Function to split a sentence if it exceeds the max word count
+	const splitLongSentence = (sentence) => {
+			const words = sentence.split(/(?=\s+)/);
+			const chunks = [];
+			let currentChunk = [];
+
+			words.forEach(word => {
+					currentChunk.push(word);
+					if (currentChunk.length >= maxWords) {
+							chunks.push(currentChunk.join(''));
+							currentChunk = [];
+					}
+			});
+
+			if (currentChunk.length > 0) {
+					chunks.push(currentChunk.join(''));
+			}
+
+			return chunks;
+	};
+
+	// Iterate over sentences and split them if necessary
+	const splitSentences = sentences.flatMap(sentence => {
+			const wordCount = sentence.split(/\s+/).length;
+			return wordCount > maxWords ? splitLongSentence(sentence) : sentence;
+	});
+
+	return splitSentences;
+}
