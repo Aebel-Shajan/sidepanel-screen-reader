@@ -1,9 +1,11 @@
 import * as utils from "./utils.js"
 import * as tts from "./tts.js"
 import EasySpeech from "./node_modules/easy-speech/dist/EasySpeech.js"
+import * as highlights from "./highlights.js";
 await EasySpeech.init() // required
 
 const elements = {
+	previewTextContainer: document.querySelector("#preview-text-container"),
 	previewText: document.querySelector("#preview-text"),
 	clearContents: document.querySelector("#clear-contents"),
 	playPause: document.querySelector("#play-pause-toggle"),
@@ -16,6 +18,7 @@ let selectedVoice = voices[0];
 let currentSentenceIndex = 0;
 let state = "stopped"
 
+highlights.setup(elements.previewTextContainer);
 
 elements.clearContents.addEventListener("click", () => {
 	elements.previewText.value = "";
@@ -89,13 +92,11 @@ async function startSpeak(sentenceStartIndex) {
 }
 
 function selectPreviewText(startIndex, endIndex) {
+	highlights.highlightText(elements.previewTextContainer, startIndex, endIndex);
 	elements.previewText.removeAttribute("disabled");
 	// move to start pos
 	elements.previewText.selectionStart = elements.previewText.selectionEnd = startIndex;
 	elements.previewText.blur();
-	elements.previewText.focus();
-	// select word
-	elements.previewText.setSelectionRange(startIndex, endIndex);
 	elements.previewText.focus();
 	// Disable the textarea again
 	elements.previewText.setAttribute("disabled", "disabled");
@@ -105,9 +106,7 @@ function pauseSpeak() {
 	state = "paused"
 	console.log("paused")
 	utils.setButtonState(elements.playPause, "play");
-	console.log("before: ", currentSentenceIndex);
 	EasySpeech.cancel();
-	console.log("after: ", currentSentenceIndex);
 }
 function resumeSpeak() {
 	state = "playing"

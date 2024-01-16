@@ -52,7 +52,7 @@ export function cleanUpText(text) {
 
 export function splitTextIntoSentences(text, maxWords = 20) {
 	// Split the text into sentences, considering punctuation and new lines
-	let sentences = text.match(/([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g)
+	let sentences = text.match(/([^\.!\?\n]+[\.!\?\n]+)|([^\.!\?\n]+$)/g)
 
 
 	// Function to split a sentence if it exceeds the max word count
