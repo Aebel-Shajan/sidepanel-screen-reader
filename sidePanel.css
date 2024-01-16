@@ -37,7 +37,7 @@ main {
 }
 #preview-text-container {
 	width: 100%;
-	overflow-y: auto;
+	overflow: auto;
 	position: relative;
 }
 #preview-text {
@@ -61,7 +61,7 @@ main {
 	border-style: solid;
 }
 .highlights {
-  color: transparent;
+  /* color: transparent; */
 	font-size: 1rem;
 	user-select: none;
 	white-space: pre-wrap;

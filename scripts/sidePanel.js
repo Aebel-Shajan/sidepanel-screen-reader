@@ -22,6 +22,7 @@ highlights.setup(elements.previewTextContainer);
 
 elements.clearContents.addEventListener("click", () => {
 	elements.previewText.value = "";
+	highlights.unhighlightText(elements.previewTextContainer);
 })
 
 elements.playPause.addEventListener("click", () => {
@@ -59,7 +60,13 @@ elements.voiceSelect.addEventListener("change", () => {
 
 
 async function startSpeak(sentenceStartIndex) {
-	let sentences = utils.splitTextIntoSentences(elements.previewText.value, 20);
+	function encodeHTML(str) {
+		var tempDiv = document.createElement('div');
+		tempDiv.textContent = str;
+		return tempDiv.innerHTML;
+	}
+
+	let sentences = utils.splitTextIntoSentences(encodeHTML(elements.previewText.value), 20);
 	console.log(sentences);
 	let totalCharLength = 0;
 	if (sentences.length && sentenceStartIndex < sentences.length) {
@@ -122,6 +129,7 @@ function stopSpeak() {
 	utils.setButtonState(elements.playPause, "play");
 	elements.previewText.removeAttribute("disabled");
 	elements.clearContents.removeAttribute("disabled");
+	highlights.unhighlightText(elements.previewTextContainer);
 	currentSentenceIndex = 0;
 	EasySpeech.cancel();
 }
