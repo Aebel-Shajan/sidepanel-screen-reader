@@ -1,6 +1,7 @@
 import * as utils from "./utils.js"
 import * as tts from "./tts.js"
-
+import EasySpeech from "./node_modules/easy-speech/dist/EasySpeech.js"
+await EasySpeech.init() // required
 
 const elements = {
 	previewText: document.querySelector("#preview-text"),
@@ -10,20 +11,17 @@ const elements = {
 	voiceSelect: document.querySelector("select")
 
 }
-let voices = [];
-let selectedVoice = null;
+let voices = tts.populateVoiceList(elements.voiceSelect, EasySpeech.voices());
+let selectedVoice = voices[0];
 
-window.speechSynthesis.onvoiceschanged = function () {
-	voices = tts.populateVoiceList(elements.voiceSelect);
-	selectedVoice = voices[0];
-};
+
 
 elements.playPause.addEventListener("click", () => {
 	if (window.speechSynthesis.speaking) {
 		if (elements.playPause.className === "play") {
-			window.speechSynthesis.resume();
+			EasySpeech.resume();
 		} else {
-			window.speechSynthesis.pause()
+			EasySpeech.pause()
 		}
 	} else {
 		startSpeak();
@@ -31,7 +29,7 @@ elements.playPause.addEventListener("click", () => {
 });
 
 elements.stopButton.addEventListener("click", () => {
-	window.speechSynthesis.cancel();
+	EasySpeech.cancel();
 });
 
 elements.voiceSelect.addEventListener("change", () => {
@@ -47,21 +45,16 @@ elements.voiceSelect.addEventListener("change", () => {
 })
 
 
-function startSpeak() {
-	let utterance = new SpeechSynthesisUtterance(elements.previewText.value);
-	// v these line has to be here 😭 or else chrome wont do it, i wanna kms this took me an hour to figure out
-  console.log(utterance); //https://stackoverflow.com/questions/54861046/why-does-a-speechsynthesisutterance-sometimes-not-fire-an-end-event-in-chromiu
-	window.speechSynthesis.cancel();
-	//////////////////////////////////////////////////
-	utterance.voice = selectedVoice;
+async function startSpeak() {
 	let spokenText = elements.previewText.value;
-	utterance.onstart = (event) => {
+	console.log(selectedVoice);
+	let start = (event) => {
 		console.log("start")
 		utils.setButtonState(elements.playPause, "pause");
 		elements.previewText.setAttribute("disabled", "disabled");
 		elements.clearContents.setAttribute("disabled", "disabled");
 	}
-	utterance.onboundary = (event) => {
+	let boundary = (event) => {
 		console.log("boundary");
 		const pos = utils.getWordPosition(spokenText, event.charIndex);
 		if (pos) {
@@ -78,22 +71,34 @@ function startSpeak() {
 			elements.previewText.setAttribute("disabled", "disabled");
 		}
 	}
-	utterance.onpause = (event) => {
+	let pause = (event) => {
 		console.log("paused")
 		utils.setButtonState(elements.playPause, "play");
 	}
-	utterance.onresume = (event) => {
+	let resume = (event) => {
 		console.log("resumed")
 		utils.setButtonState(elements.playPause, "pause");
 	}
 
-	utterance.onend = utterance.onerror = (event) => {
+	let end = (event) => {
 		console.log("error/ended")
 		elements.playPause = utils.setButtonState(elements.playPause, "play");
 		elements.previewText.removeAttribute("disabled");
 		elements.clearContents.removeAttribute("disabled");
 	}
-	if (elements.previewText.value.length < 1000) {
-		window.speechSynthesis.speak(utterance);
-	}
+
+	await EasySpeech.speak({
+		text: spokenText,
+		voice: selectedVoice, // optional, will use a default or fallback
+		pitch: 1,
+		rate: 1,
+		volume: 1,
+		// there are more events, see the API for supported events
+		start: start,
+		boundary: boundary,
+		pause: pause,
+		resume: resume,
+		error: end,
+		end: end
+	})
 }

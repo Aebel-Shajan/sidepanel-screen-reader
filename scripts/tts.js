@@ -1,9 +1,7 @@
 import * as utils from "./utils.js";
 
-export function populateVoiceList(voiceSelect) {
-	let voices = [];
-	const synth = window.speechSynthesis;
-	voices = synth.getVoices().sort(function (a, b) {
+export function populateVoiceList(voiceSelect, voices) {
+	voices = voices.sort(function (a, b) {
 		const aname = a.name.toUpperCase();
 		const bname = b.name.toUpperCase();
 
