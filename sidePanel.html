@@ -47,15 +47,33 @@ Limitations:
 		<div id="options-container" class="panel">
 			<div class="options-row">
 				<button id="clear-contents">🗑️</button>
+				<button id="settings-toggle" class="close-settings">❌</button>
 				<button id="play-pause-toggle" class="play">▶️</button>
 				<button id="stop">⏹️</button>
 			</div>
-			<div class="options-row">
-				<select></select>
+			<div id="settings">
+				<div class="options-row">
+					<select></select>
+				</div>
+				<div class="options-row range-input">
+					<label for="volume-input">Volume</label>
+					<div id="volume-value"></div>
+					<input type="range" min="0" max="1" step="0.1" id="volume-input" value="1">
+				</div>
+				<div class="options-row range-input">
+					<label for="rate-input">Rate</label>
+					<div id="rate-value"></div>
+					<input type="range" min="0.1" max="1.7" step="0.1" id="rate-input" value="1">
+				</div>
+				<div class="options-row range-input">
+					<label for="pitch-input">Pitch</label>
+					<div id="pitch-value"></div>
+					<input type="range" min="0.1" max="2" step="0.1" id="pitch-input" value="1">
+				</div>
 			</div>
-
-
-		</div>
+				
+				
+			</div>
 		</div>
 		<div id="loading"></div>
 	</main>

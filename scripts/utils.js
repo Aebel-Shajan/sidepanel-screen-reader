@@ -7,6 +7,12 @@ export function setButtonState(button, state) {
 		case "pause":
 			button.textContent = "⏸️";
 			break
+		case "open-settings":
+			button.textContent = "⚙️";
+			break
+		case "close-settings":
+			button.textContent = "❌"
+			break
 		default:
 			button.textContent = state.charAt(0).toUpperCase() + state.slice(1);
 			break;
@@ -52,7 +58,7 @@ export function cleanUpText(text) {
 
 export function splitTextIntoSentences(text, maxWords = 20) {
 	// Split the text into sentences, considering punctuation and new lines
-	let sentences = text.match(/([^\.!\?\n,]+[\.!\?\n,]+)|([^\.!\?\n,]+$)/g)
+	let sentences = text.match(/([^\.!\?\n]+[\.!\?\n,]+)|([^\.!\?\n]+$)/g) // fix commas for numbers
 
 
 	// Function to split a sentence if it exceeds the max word count

@@ -92,16 +92,21 @@ main {
 	width: 100%;
 	display: block;
 	background-color: var(--secondary);
-	color: transparent;
+	padding: 0 1.2rem;
+	padding-top: 0.7rem;
 }
 .options-row {
 	width: 100%;
+	min-height: 2.5rem;
 
-	padding: 0.3rem;
-	
+	padding-bottom: 0.7rem;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
+}
+.range-input {
+	display: grid;
+	grid-template-columns: 2fr 1fr 4fr;
 }
 button {
 	font-size: 1.5rem;
@@ -115,7 +120,10 @@ button:hover {
 	background-color: #bcbcbc66;
 }
 select {
-	width: 80%;
+	width: 100%;
 	bottom:100%;
 	border-radius: 1rem;
+}
+#settings { 
+	transition: height 0.25s ease-in;
 }

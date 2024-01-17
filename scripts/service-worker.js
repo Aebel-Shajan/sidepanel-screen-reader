@@ -1,17 +1,19 @@
-let sidePanelOpen = false
+let settings = null;
 
 chrome.sidePanel
 	.setPanelBehavior({ openPanelOnActionClick: true })
 	.catch((error) => console.error(error));
 
-// Stop tts when sidepanel is closed
 chrome.runtime.onConnect.addListener(function (port) {
-	if (port.name === 'sidepanel-screen-reader') {
-		sidePanelOpen = true;
-	}
-});
+	port.onMessage.addListener((message) => {
+		settings = message.settings;
+	})
 
-if (!sidePanelOpen) {
-	
-}
+	// save settings on panel close
+	port.onDisconnect.addListener(() => {
+		if (settings) {
+			chrome.storage.local.set({settings: settings});
+		}
+	})
+});
 

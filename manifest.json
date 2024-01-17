@@ -6,7 +6,7 @@
 	"icons": {
 		"128": "images/sidepanel-screen-reader.png"
 	},
-	"permissions": ["sidePanel", "tts", "scripting", "contextMenus", "activeTab"],
+	"permissions": ["sidePanel", "tts", "scripting", "contextMenus", "activeTab", "storage"],
 	"action": {
 		"default_title": "Click to open panel"
 	},
