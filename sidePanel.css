@@ -3,7 +3,7 @@
 * {
 	margin: 0;
 	box-sizing: border-box;
-	font-family: "Poppins";
+	font-family: "Poppins", Verdana;
 	--third: #F2EAD3;
 	--secondary: #DFD7BF;
 	--primary: #3F2305;

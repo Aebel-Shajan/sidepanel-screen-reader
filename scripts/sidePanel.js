@@ -11,7 +11,6 @@ const elements = {
 	playPause: document.querySelector("#play-pause-toggle"),
 	stopButton: document.querySelector("#stop"),
 	voiceSelect: document.querySelector("select")
-
 }
 let voices = tts.populateVoiceList(elements.voiceSelect, EasySpeech.voices());
 let selectedVoice = voices[0];
@@ -127,6 +126,9 @@ function showDisplayText(sentences, sentenceIndex) {
 
 		})
 		elements.displayText.appendChild(sentenceDiv);
+		if (sentenceIndex === j) {
+			sentenceDiv.scrollIntoView({ behavior: "smooth", block: "center"});
+		}
 	}
 }
 
