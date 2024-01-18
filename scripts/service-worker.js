@@ -29,12 +29,12 @@ chrome.runtime.onConnect.addListener(function (port) {
 // Add context menu for reading website
 chrome.runtime.onInstalled.addListener(function () {
 	chrome.contextMenus.create({
-		title: "Read website (Dev)",
+		title: "Read website",
 		id: "read-website",
 		contexts: ["page"]
 	});
 	chrome.contextMenus.create({
-		title: "Read selection (Dev): %s",
+		title: "Read selection: %s",
 		id: "read-selection",
 		contexts: ["selection"]
 	});

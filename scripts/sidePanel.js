@@ -33,6 +33,7 @@ let settings = {
 let currentSentenceIndex = 0;
 let state = "stopped";
 let currentSpeech = null;
+uiHandler()
 
 // connect to service worker and send settings info every 2 secs
 let port = chrome.runtime.connect({ name: "sidepanel-screen-reader"});
@@ -195,6 +196,7 @@ function uiHandler() {
 		case "playing":
 			utils.setButtonState(elements.playPause, "pause");
 			elements.clearContents.setAttribute("disabled", "disabled");
+			elements.stopButton.removeAttribute("disabled");
 			elements.previewText.style.display = "none";
 			elements.displayText.style.display = "unset";
 			elements.previewTextContainer.style.backgroundColor = "#ffffff77"
@@ -206,6 +208,7 @@ function uiHandler() {
 		default:
 			utils.setButtonState(elements.playPause, "play");
 			elements.clearContents.removeAttribute("disabled");
+			elements.stopButton.setAttribute("disabled", "disabled") ;
 			elements.previewText.style.display = "unset";
 			elements.displayText.style.display = "none";
 			elements.previewTextContainer.style.backgroundColor = "transparent"

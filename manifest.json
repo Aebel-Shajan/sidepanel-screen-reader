@@ -1,12 +1,12 @@
 {
-	"name": "Sidepanel Screen Reader",
+	"name": "Sidepanel Screen Reader TTS",
   "version": "0.0.1",
   "manifest_version": 3,
-	"description": "AI Screen Reader but in the side panel.",
+	"description": "AI Screen Reader/ Text to speech tool but in the side panel.",
 	"icons": {
 		"128": "images/sidepanel-screen-reader.png"
 	},
-	"permissions": ["sidePanel", "tts", "scripting", "contextMenus", "activeTab", "storage"],
+	"permissions": ["sidePanel", "scripting", "contextMenus", "activeTab", "storage"],
 	"action": {
 		"default_title": "Click to open panel"
 	},
