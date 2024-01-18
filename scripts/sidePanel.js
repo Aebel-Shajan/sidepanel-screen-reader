@@ -56,11 +56,11 @@ elements.settingsButton.addEventListener("click", () => {
 	let buttonState = elements.settingsButton.className;
 	switch (buttonState) {
 		case "open-settings":
-			elements.settingsDiv.style.height = "fit-content";
+			elements.settingsDiv.style.display = "unset";
 			utils.setButtonState(elements.settingsButton, "close-settings");
 			break;
 		case "close-settings":
-			elements.settingsDiv.style.height = "0px";
+			elements.settingsDiv.style.display = "none";
 			utils.setButtonState(elements.settingsButton, "open-settings");
 			break;
 	}
@@ -234,3 +234,10 @@ function showDisplayText(sentences, sentenceIndex) {
 		}
 	}
 }
+
+chrome.runtime.onMessage.addListener(
+	(message, sender, sendResponse) => {
+		setPreviewText(message.text);
+		startSpeak(0);
+	}
+)
