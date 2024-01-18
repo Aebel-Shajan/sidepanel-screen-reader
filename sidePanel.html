@@ -2,10 +2,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Gen Z screen reader</title>
+	<title>Sidepanel screen reader</title>
 	<link rel="stylesheet" href="sidePanel.css">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
@@ -23,13 +21,11 @@
 			</div>
 			
 			<textarea id="preview-text" placeholder="Instructions
-_______________
+________
 1. Either:
 	-Right click > click 'Read website'
 	-Relect text > right click > click 'Read selection'
 	-Copy and paste content here
-
-then
 
 2. Press ▶️ to start tts (disables text area)
 3. Press ⏹️ to stop tts (enables text area)
@@ -39,7 +35,8 @@ then
 
 
 
-Limitations:
+Limitations
+_______
 1. I'm using mozilla's readability.js library, it has trouble with some websites 😢
 2. It struggles with decimals like 0.123. 
 3. Can't do pdfs yet
@@ -59,17 +56,17 @@ Limitations:
 				</div>
 				<div class="options-row range-input">
 					<label for="volume-input">Volume</label>
-					<div id="volume-value"></div>
+					<div id="volume-value">1</div>
 					<input type="range" min="0" max="1" step="0.1" id="volume-input" value="1">
 				</div>
 				<div class="options-row range-input">
 					<label for="rate-input">Rate</label>
-					<div id="rate-value"></div>
+					<div id="rate-value">1</div>
 					<input type="range" min="0.1" max="1.7" step="0.1" id="rate-input" value="1">
 				</div>
 				<div class="options-row range-input">
 					<label for="pitch-input">Pitch</label>
-					<div id="pitch-value"></div>
+					<div id="pitch-value">1</div>
 					<input type="range" min="0.1" max="2" step="0.1" id="pitch-input" value="1">
 				</div>
 			</div>

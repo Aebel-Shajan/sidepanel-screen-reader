@@ -36,11 +36,24 @@ let currentSpeech = null;
 uiHandler()
 
 // connect to service worker and send settings info every 2 secs
-let port = chrome.runtime.connect({ name: "sidepanel-screen-reader"});
-setInterval(()=> {
-	port.postMessage({settings:settings});
+let port = await chrome.runtime.connect({ name: "sidepanel-screen-reader" });
+setInterval(() => {
+	port.postMessage({ settings: settings });
 	console.log("settings sent", settings)
 }, 2000);
+
+// Start speaking when it recieves a message.
+chrome.runtime.onMessage.addListener(
+	(message, sender, sendResponse) => {
+		try {
+			setPreviewText(utils.cleanUpText(message.text));
+			startSpeak(0);
+		} catch {
+			setPreviewText("Try refreshing the page and trying again. 😔");
+			startSpeak(0);
+		}
+	}
+)
 
 // load storage and if it exists modify our own settings
 let storage = await chrome.storage.local.get(["settings"]);
@@ -107,7 +120,7 @@ elements.pitchInput.addEventListener("input", () => setPitch(elements.pitchInput
 
 function setVoice(voiceName) {
 	const voiceIndex = voices.findIndex(voice => voice.name === voiceName);
-	if (voiceIndex === -1) {voiceIndex = 0;}
+	if (voiceIndex === -1) { voiceIndex = 0; }
 	settings.voice = voices[voiceIndex].name;
 	elements.voiceSelect.selectedIndex = voiceIndex;
 }
@@ -142,7 +155,7 @@ async function startSpeak(sentenceStartIndex) {
 		tempDiv.textContent = str;
 		return tempDiv.innerHTML;
 	}
-	let sentences = utils.splitTextIntoSentences(encodeHTML(elements.previewText.value), 20);
+	let sentences = utils.splitTextIntoSentences(encodeHTML(elements.previewText.value), 30);
 	try {
 		if (sentences.length && sentenceStartIndex < sentences.length) {
 			state = "playing";
@@ -155,7 +168,7 @@ async function startSpeak(sentenceStartIndex) {
 				showDisplayText(sentences, sentenceIndex);
 				currentSpeech = await EasySpeech.speak({
 					text: spokenSentence,
-					voice: voiceSetting, 
+					voice: voiceSetting,
 					pitch: settings.pitch,
 					rate: settings.rate,
 					volume: settings.volume
@@ -208,7 +221,7 @@ function uiHandler() {
 		default:
 			utils.setButtonState(elements.playPause, "play");
 			elements.clearContents.removeAttribute("disabled");
-			elements.stopButton.setAttribute("disabled", "disabled") ;
+			elements.stopButton.setAttribute("disabled", "disabled");
 			elements.previewText.style.display = "unset";
 			elements.displayText.style.display = "none";
 			elements.previewTextContainer.style.backgroundColor = "transparent"
@@ -238,9 +251,3 @@ function showDisplayText(sentences, sentenceIndex) {
 	}
 }
 
-chrome.runtime.onMessage.addListener(
-	(message, sender, sendResponse) => {
-		setPreviewText(message.text);
-		startSpeak(0);
-	}
-)

@@ -8,6 +8,10 @@
 	--secondary: #DFD7BF;
 	--primary: #3F2305;
 }
+body {
+	display: grid;
+	grid-template-rows: 2.5rem auto;
+}
 
 header {
 	background-color: var(--secondary);
@@ -16,7 +20,6 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	font-size: large;
-	height: 5vh;
 	padding: 0.5rem;
 }
 .logo-image {
@@ -24,7 +27,7 @@ header {
 }
 
 main {
-	height: 95vh;
+
 	display: grid;
 	grid-template-rows: 1fr auto;
 	overflow: hidden;
