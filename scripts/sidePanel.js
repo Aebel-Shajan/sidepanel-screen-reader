@@ -39,7 +39,7 @@ uiHandler()
 let port = await chrome.runtime.connect({ name: "sidepanel-screen-reader" });
 setInterval(() => {
 	port.postMessage({ settings: settings });
-	console.log("settings sent", settings)
+	// console.log("settings sent", settings)
 }, 2000);
 
 // Start speaking when it recieves a message.
@@ -164,7 +164,6 @@ async function startSpeak(sentenceStartIndex) {
 				currentSentenceIndex = sentenceIndex;
 				const spokenSentence = sentences[sentenceIndex];
 				let voiceSetting = voices.find(voice => voice.name === settings.voice) || voices[0];
-				console.log(voiceSetting);
 				showDisplayText(sentences, sentenceIndex);
 				currentSpeech = await EasySpeech.speak({
 					text: spokenSentence,

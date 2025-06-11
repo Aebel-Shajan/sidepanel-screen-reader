@@ -95,21 +95,26 @@ export function splitTextIntoSentences(text, maxWords = 20) {
 
 
 export function sortVoices(voices) {
+	voices = voices.filter(v => !v.name.toLowerCase().includes('google'));
 	voices = voices.sort(function (a, b) {
-		const aname = a.name.toUpperCase();
-		const bname = b.name.toUpperCase();
-		if (aname.includes("ENGLISH")) { // INGERLANSD LES GOOO
-			return -1;
-		} else if (bname.includes("ENGLISH")) {
-			return +1;
-		} else if (aname < bname) {
-			return -1;
-		} else if (aname == bname) {
-			return 0;
-		} else {
-			return +1;
-		}
+		// Default voices first
+		if (a.default && !b.default) return -1;
+		if (!a.default && b.default) return 1;
+
+		// English voices next
+		const isAEnglish = a.lang && a.lang.toLowerCase().startsWith('en');
+		const isBEnglish = b.lang && b.lang.toLowerCase().startsWith('en');
+		if (isAEnglish && !isBEnglish) return -1;
+		if (!isAEnglish && isBEnglish) return 1;
+
+		// LocalService voices before remote
+		if (a.localService && !b.localService) return -1;
+		if (!a.localService && b.localService) return 1;
+
+		// Otherwise, sort by name
+		return a.name.localeCompare(b.name);
 	});
+	
 	return voices;
 }
 
