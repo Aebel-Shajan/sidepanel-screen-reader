@@ -1,6 +1,6 @@
 {
 	"name": "Sidepanel Screen Reader TTS",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 3,
 	"description": "AI Screen Reader/ Text to speech tool but in the side panel.",
 	"icons": {
